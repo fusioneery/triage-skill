@@ -32,37 +32,54 @@ needs for the user's current request.
 
 ## Install
 
-Requires Node.js 18+.
+Requires Node.js 18+. Uses the [`skills`](https://www.npmjs.com/package/skills)
+CLI from `vercel-labs/skills`, which auto-detects your installed coding agents
+and writes the skill into the right path for each.
 
-This repo follows the [`skill`](https://www.npmjs.com/package/skill) CLI layout
-(`skills/<name>/SKILL.md`). Point `SKILL_BASE_URL` at this repo, then install:
+### Project install (recommended for teams)
+
+From the project you want the skill available in:
 
 ```bash
-SKILL_BASE_URL=https://github.com/fusioneery/triage-skill/tree/main \
-  npx skill skills/triage
+npx skills add fusioneery/triage-skill
 ```
 
-That writes the skill into `.codebuddy/skills/triage/` in the current project.
+Default scope is project (`./<agent>/skills/`) — committed with your repo so
+the team picks it up. Add `-g` for a user-wide install:
 
-### Install into Claude Code
+```bash
+npx skills add fusioneery/triage-skill -g
+```
 
-Claude Code reads skills from `~/.claude/skills/`. To install there directly:
+### Target a specific agent
+
+```bash
+# Claude Code only, globally
+npx skills add fusioneery/triage-skill -g -a claude-code
+
+# Cursor + Codex, in the current project
+npx skills add fusioneery/triage-skill -a cursor -a codex
+
+# Non-interactive (CI-friendly)
+npx skills add fusioneery/triage-skill -g -a claude-code -y
+```
+
+Supported agents include Claude Code, Codex, Cursor, OpenCode, Amp, Gemini CLI,
+GitHub Copilot, Goose, Windsurf, Roo Code, and 40+ others — see the
+[full list](https://github.com/vercel-labs/skills#supported-agents).
+
+### Manual install (no `skills` CLI)
 
 ```bash
 git clone https://github.com/fusioneery/triage-skill.git
-mkdir -p ~/.claude/skills
-cp -r triage-skill/skills/triage ~/.claude/skills/triage
+# Claude Code (global)
+mkdir -p ~/.claude/skills && cp -r triage-skill/skills/triage ~/.claude/skills/triage
+# Or single project
+mkdir -p .claude/skills && cp -r triage-skill/skills/triage .claude/skills/triage
 ```
 
-Or for a single project:
-
-```bash
-mkdir -p .claude/skills
-cp -r triage-skill/skills/triage .claude/skills/triage
-```
-
-After install, the skill is discoverable by name `triage` and activates when
-you ask the agent to triage tasks, assess PR status, continue an active task,
+After install the skill is discoverable by name `triage` and activates when you
+ask the agent to triage tasks, assess PR status, continue an active task,
 handle review rounds, decide merge readiness, etc.
 
 ## Usage
