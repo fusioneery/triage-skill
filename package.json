@@ -1,0 +1,23 @@
+{
+  "name": "triage-skill",
+  "version": "0.1.0",
+  "description": "Claude Code / agent skill for triaging engineering work across Linear, GitHub, Slack, Notion, and local worktrees.",
+  "license": "MIT",
+  "author": "Acme Inc",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "agent-skill",
+    "skill",
+    "triage",
+    "linear",
+    "github",
+    "slack",
+    "notion"
+  ],
+  "files": [
+    "skills",
+    "README.md",
+    "LICENSE"
+  ]
+}
