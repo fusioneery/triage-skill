@@ -38,7 +38,7 @@ This repo follows the [`skill`](https://www.npmjs.com/package/skill) CLI layout
 (`skills/<name>/SKILL.md`). Point `SKILL_BASE_URL` at this repo, then install:
 
 ```bash
-SKILL_BASE_URL=https://github.com/<your-org>/triage-skill/tree/main \
+SKILL_BASE_URL=https://github.com/fusioneery/triage-skill/tree/main \
   npx skill skills/triage
 ```
 
@@ -49,7 +49,7 @@ That writes the skill into `.codebuddy/skills/triage/` in the current project.
 Claude Code reads skills from `~/.claude/skills/`. To install there directly:
 
 ```bash
-git clone https://github.com/<your-org>/triage-skill.git
+git clone https://github.com/fusioneery/triage-skill.git
 mkdir -p ~/.claude/skills
 cp -r triage-skill/skills/triage ~/.claude/skills/triage
 ```
