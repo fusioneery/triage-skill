@@ -106,3 +106,22 @@ Report:
 - feature stand URL opened (raw and final, with `customBackendUrl` if applied) and open mechanism
 - final task state
 - next action
+
+## Forbidden
+
+- The watcher is **read-only**. It does not push, rebase, merge, or post
+  comments. Those decisions stay with the parent agent (and the user) after
+  the watcher returns.
+- **NEVER enable auto-merge** when the watcher returns `clean`, `timeout`, or
+  any other terminal state. Do not invoke `gh pr merge ... --auto`, do not
+  call `enablePullRequestAutoMerge`, do not hit the
+  `PUT /pulls/{number}/automerge` REST endpoint. The watcher signals
+  readiness for the *next* human decision, not a license to merge silently.
+- **NEVER respond to a `clean` watcher exit** with `gh pr merge`,
+  `enablePullRequestAutoMerge`, `markPullRequestReadyForReview`,
+  `convertPullRequestToDraft`, or any equivalent. Route the signal to the
+  user; let them decide the merge.
+- Do not flip a draft PR to ready-for-review from inside the watcher (or
+  from the parent on receiving a watcher result) without an explicit user
+  instruction that names the PR.
+- One watcher per PR. Never run two watchers in parallel on the same branch.

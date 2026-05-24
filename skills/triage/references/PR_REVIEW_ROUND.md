@@ -103,6 +103,13 @@ Definitions:
 - Do not apply all Copilot comments mechanically.
 - Do not dismiss or resolve GitHub threads unless explicitly asked and allowed.
 - Do not push, merge, or request re-review unless the user asked.
+- **NEVER enable auto-merge** at the end of a review round, even when all
+  comments are addressed and CI is green. Do not invoke `gh pr merge ... --auto`,
+  do not call `enablePullRequestAutoMerge`, do not hit the
+  `PUT /pulls/{number}/automerge` REST endpoint. The end of a review round is
+  a transition to `ready_to_merge` (read `READY_TO_MERGE.md`), not a merge.
+- **NEVER flip a draft PR to ready-for-review** from inside a review-round
+  assessment without an explicit user instruction that names the PR.
 - Do not ignore human requested changes.
 - Do not rewrite prior task-note history to make the current round look clean.
 

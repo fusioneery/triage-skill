@@ -86,6 +86,9 @@ Use `references/TASK_NOTE_TEMPLATE.md`.
 
 ## Invariants
 
+- **NEVER enable auto-merge on any PR.** Do not invoke `gh pr merge ... --auto`, do not call the `enablePullRequestAutoMerge` GraphQL mutation, do not hit the `PUT /repos/{owner}/{repo}/pulls/{number}/automerge` REST endpoint, and do not ask a downstream agent or workflow to do it. Auto-merge fires silently the moment required checks go green, which bypasses the explicit human-in-the-loop confirmation this skill is built around. Triage opens PRs; humans merge them.
+- **NEVER merge a PR opened during a triage run**, even if the same agent opened it. Triage's job ends at "PR opened, body written, label applied, watcher dispatched". The merge is a separate, human-authored step.
+- **NEVER flip a draft PR to ready-for-review without an explicit user confirmation that names the PR.** `gh pr ready` / `markPullRequestReadyForReview` triggers required-reviewer auto-assignment and CI side-effects; it is a write, not a status read.
 - Do not assume a task is complete because a PR exists.
 - Do not assume a PR is ready because CI is green.
 - Do not blindly apply Copilot comments.

@@ -67,7 +67,17 @@ Map these back to canonical states:
 
 ## Forbidden
 
-- Do not merge.
+- Do not merge. This assessment is read-only.
+- **NEVER enable auto-merge.** Do not invoke `gh pr merge ... --auto`, do not
+  call the `enablePullRequestAutoMerge` GraphQL mutation, and do not hit the
+  `PUT /repos/{owner}/{repo}/pulls/{number}/automerge` REST endpoint. A
+  `ready_to_merge` verdict is a recommendation to the human, not a license
+  for the agent to merge or arm an auto-merge. Auto-merge fires silently on
+  green CI and skips the explicit user confirmation this workflow exists to
+  produce.
+- **NEVER flip a draft PR to ready-for-review** as part of a ready-to-merge
+  assessment. Use `markPullRequestReadyForReview` only on explicit user
+  request that names the PR.
 - Do not approve your own PR.
 - Do not dismiss reviews or resolve threads unless explicitly asked.
 - Do not post approval nudges unless explicitly asked.
